@@ -6,10 +6,10 @@ const i18nConfig: InitOptions = {
   debug: true,
   resources: {
     en: {
-      translation: require('../public/locales/en.json'),
+      // translation: require('../public/locales/en.json'),
     },
     es: {
-        translation: require('../public/locales/es.json'),
+        // translation: require('../public/locales/es.json'),
       },
     // Add more languages as needed
   },
