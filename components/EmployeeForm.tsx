@@ -76,7 +76,7 @@ const FormComponent: React.FC = () => {
       setActiveTab(0)
   };
 
-  const handleImageUpload = (image: string) => {
+  const handleImageUpload: (image: string) => void = (image) => {
     console.log('Uploading image:', image);
     let imageLink = image.split('blob:')
     formData.avatar = imageLink[1]

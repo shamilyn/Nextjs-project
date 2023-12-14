@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
-const { withTranslation } = require('next-i18next');
+const { i18n } = require("./next-i18next.config");
 const nextConfig = {
     // rewrites: async () => nextI18NextRewrites(),
 }
 
-module.exports = withTranslation();
+module.exports = {
+    i18n,
+}
