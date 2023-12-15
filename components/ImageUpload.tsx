@@ -1,4 +1,3 @@
-// components/ImageUpload.tsx
 import React, { useState, useEffect } from 'react';
 import { Button, Input, Card, CardContent, CardMedia, Typography } from '@mui/material';
 import {useEmployeeStore} from '../store/store';
@@ -12,7 +11,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload }) => {
   const { selectedEmployee, setSelectedEmployee } = useEmployeeStore();
 
   useEffect(() => {
-    // Update the form data when selectedEmployee changes
     if (selectedEmployee) {
       setSelectedImage(selectedEmployee.avatar);
     }
@@ -23,7 +21,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload }) => {
     if (files && files.length > 0) {
       const imageUrl = URL.createObjectURL(files[0]);
       setSelectedImage(imageUrl);
-      // Call the callback function with the image URL
       onImageUpload(imageUrl);
     }
   };
@@ -32,7 +29,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload }) => {
     <div>
       <Input
         type="file"
-        // accept="image/*"
         onChange={handleImageChange}
         style={{ display: 'none' }}
         id="image-upload-input"

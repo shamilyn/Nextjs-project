@@ -1,4 +1,3 @@
-// components/FormComponent.tsx
 import React, { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
@@ -20,19 +19,34 @@ const FormComponent: React.FC = () => {
 
   });
 
-
-  // const addData  = useEmployeeStore((state) => state.addData);
-
   const { data, setData, addData, selectedEmployee, setSelectedEmployee, updateData, setTabName, setActiveTab } = useEmployeeStore();
 
-  // const selectedEmployee = useEmployeeStore((state) => state.selectedEmployee);
+  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
 
   useEffect(() => {
-    // Update the form data when selectedEmployee changes
     if (selectedEmployee) {
       setFormData(selectedEmployee);
     }
   }, [selectedEmployee]);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+
+    if (name === 'salary' && value !== '' && !isNaN(Number(value)) && Number.isInteger(Number(value))) {
+      setFormData((formData) => ({ ...formData, [name]: value }));
+    } else if (name !== 'salary') {
+      setFormData((formData) => ({ ...formData, [name]: value }));
+    }
+
+     const shouldDisableButton = false
+     setIsButtonDisabled(shouldDisableButton);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Backspace' && event.currentTarget.value != '') {
+      setFormData((formData) => ({ ...formData, salary: event.currentTarget.value }));
+    }
+  };
 
 
   const handleSubmit = async () =>  {
@@ -42,7 +56,6 @@ const FormComponent: React.FC = () => {
           setTabName('Add Employee');
         }
         else {
-          // addData(formData);
           addData({ ...formData, id: data.length + 1 });
 
           await setData([formData, ...data]);
@@ -104,8 +117,7 @@ const FormComponent: React.FC = () => {
             autoComplete="given-name"
             variant="outlined"
             value={formData.first_name}
-            onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
-            // onChange={handleChange}
+            onChange={handleInputChange}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -118,12 +130,12 @@ const FormComponent: React.FC = () => {
             autoComplete="family-name"
             variant="outlined"
             value={formData.last_name}
-            onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
+            onChange={handleInputChange}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            required
+            type='number'
             id="salary"
             name="salary"
             label="Salary"
@@ -131,7 +143,9 @@ const FormComponent: React.FC = () => {
             autoComplete="shipping address-level2"
             variant="outlined"
             value={formData.salary}
-            onChange={(e) => setFormData({ ...formData, salary: e.target.value })}
+            onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
+            InputProps={{ inputProps: { step: 1 } }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -142,7 +156,7 @@ const FormComponent: React.FC = () => {
             fullWidth
             variant="outlined"
             value={formData.age}
-            onChange={(e) => setFormData({ ...formData, age: e.target.value })}
+            onChange={handleInputChange}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -155,7 +169,7 @@ const FormComponent: React.FC = () => {
             autoComplete="shipping postal-code"
             variant="outlined"
             value={formData.contact}
-            onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
+            onChange={handleInputChange}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -168,14 +182,14 @@ const FormComponent: React.FC = () => {
             autoComplete="shipping country"
             variant="outlined"
             value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            onChange={handleInputChange}
           />
         </Grid>
         <Grid item xs={12}>
             <ImageUpload onImageUpload={handleImageUpload} />
         </Grid>
         <Grid item xs={12} sm={10} style={gridStyle} textAlign="right">
-            <Button variant="contained" onClick={handleSubmit}>
+            <Button variant="contained" onClick={handleSubmit} disabled={isButtonDisabled}>
             {selectedEmployee ? 'Update' : 'Submit'}
             </Button>
             <Button variant="contained" style={buttonStyle}  onClick={handleCancel}>

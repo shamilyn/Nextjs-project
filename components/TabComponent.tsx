@@ -1,4 +1,3 @@
-// TabsComponent.tsx
 import React, { useEffect, useState } from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -6,7 +5,6 @@ import Box from '@mui/material/Box';
 import EmployeeForm from '../components/EmployeeForm';
 import TableComponent from '../components/TableComponent';
 import {useEmployeeStore, initData} from '../store/store';
-// import useFormStore from '../store/store';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -28,18 +26,15 @@ const TabPanel: React.FC<TabPanelProps> = ({ children, value, index }) => {
 };
 
 const TabsComponent: React.FC = () => {
-  // const [value, setValue] = useState<number>(0);
   const { activeTab, tabName, setActiveTab, setTabName } = useEmployeeStore();
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    // setValue(newValue);
     setActiveTab(newValue);
   };
 
 
   useEffect(() => {
-    console.log("SET ACTIVE TAB")
-    initData(); // Fetch initial data when the component mounts
+    initData(); 
   }, []);
   
 

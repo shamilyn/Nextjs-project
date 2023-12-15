@@ -1,4 +1,3 @@
-// components/DataTableComponent.tsx
 import React, { useEffect,useState } from 'react';
 import {
   Paper,
@@ -22,20 +21,11 @@ const EmployeeTable: React.FC = () => {
 
   const { data, setSelectedEmployee, setActiveTab, setTabName} = useEmployeeStore();
   const router = useRouter();
-  // const [selectedEmployee, setSelectedEmployee] = useState<EmployeeData | null>(null);
-
-  
-
-  
 
   const handleEdit = (index: number) => {
-    // Set the selected employee based on the index
-    console.log("edittt")
     setSelectedEmployee(data[index]);
-    // Navigate to the edit tab or section
     setTabName('Edit Employee')
     setActiveTab(1)
-    // You can use routing or some other mechanism to switch to the edit view
   };
 
   const [page, setPage] = useState(0);
